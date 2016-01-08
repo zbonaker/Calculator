@@ -9,6 +9,8 @@ namespace Calculator
 {
     class Program
     {
+        public static string baseValue;
+
         static void Main(string[] args)
         {
             Console.WriteLine("Console Calculator: Your trusted source for second-grade mathematics!\n");
@@ -16,34 +18,48 @@ namespace Calculator
 
             Calculator doCalc = new Calculator();
 
-            Console.WriteLine("Input the first number:");
-            doCalc.Input1 = Console.ReadLine();
+            Console.WriteLine("Input the first number: ");
+            baseValue = Console.ReadLine();
+            while (!Validate(baseValue))
+            {
+                baseValue = Console.ReadLine();
+            }
 
             Console.WriteLine("\nInput the next number:");
-            doCalc.Input2 = Console.ReadLine();
+            doCalc.Input = Console.ReadLine();
+            while (!Validate(doCalc.Input))
+            {
+                doCalc.Input = Console.ReadLine();
+            }
 
-
-            Console.WriteLine("\nEquals: {0}", doCalc.Addition());
+            Console.WriteLine("\nEquals: {0}", doCalc.Addition(baseValue));
 
             Console.ReadLine();
+        }
+
+        private static bool Validate(string input)
+        {
+            int parsed;
+            if (!int.TryParse(input, out parsed))
+                Console.WriteLine("\nInput is not an integer! Please input the number again: ");
+            return int.TryParse(input, out parsed);
         }
     }
 
     class Calculator
     {
-        public string Input1 { get; set; }
-        public string Input2 { get; set; }
+        public string Input { get; set; }
 
-        public int Addition()
+        public int Addition(string baseValue)
         {
-            int Sum = 0;
-            int Input1Parsed;
-            int Input2Parsed;
+            int Sum;
+            int baseValueParsed;
+            int inputParsed;
 
-            int.TryParse(this.Input1, out Input1Parsed);
-            int.TryParse(this.Input2, out Input2Parsed);
+            int.TryParse(baseValue, out baseValueParsed);
+            int.TryParse(this.Input, out inputParsed);
 
-            Sum = Input1Parsed + Input2Parsed;
+            Sum = baseValueParsed + inputParsed;
             return Sum;
         }
     }
