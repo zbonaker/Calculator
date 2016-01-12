@@ -14,35 +14,28 @@ namespace Calculator
         static void Main(string[] args)
         {
             Console.WriteLine("Console Calculator: Your trusted source for second-grade mathematics!\n");
-            Console.WriteLine("Current functionality: \n-Add two numbers together\n");
+            Console.WriteLine("Current functionality: \n-Add multiple numbers\n");
 
             Calculator doCalc = new Calculator();
 
             Console.WriteLine("Input the first number: ");
             baseValue = Console.ReadLine();
-            while (!Validate(baseValue))
+            while (!Calculator.Validate(baseValue))
             {
                 baseValue = Console.ReadLine();
             }
 
             Console.WriteLine("\nInput the next number:");
             doCalc.Input = Console.ReadLine();
-            while (!Validate(doCalc.Input))
+            while (!Calculator.Validate(doCalc.Input))
             {
                 doCalc.Input = Console.ReadLine();
             }
 
             Console.WriteLine("\nEquals: {0}", doCalc.Addition(baseValue));
-
+            baseValue = doCalc.Addition(baseValue);
+          
             Console.ReadLine();
-        }
-
-        private static bool Validate(string input)
-        {
-            int parsed;
-            if (!int.TryParse(input, out parsed))
-                Console.WriteLine("\nInput is not an integer! Please input the number again: ");
-            return int.TryParse(input, out parsed);
         }
     }
 
@@ -50,7 +43,15 @@ namespace Calculator
     {
         public string Input { get; set; }
 
-        public int Addition(string baseValue)
+        public static bool Validate(string input)
+        {
+            int parsed;
+            if (!int.TryParse(input, out parsed))
+                Console.WriteLine("\nInput is not an integer! Please input the number again: ");
+            return int.TryParse(input, out parsed);
+        }
+
+        public string Addition(string baseValue)
         {
             int Sum;
             int baseValueParsed;
@@ -60,7 +61,7 @@ namespace Calculator
             int.TryParse(this.Input, out inputParsed);
 
             Sum = baseValueParsed + inputParsed;
-            return Sum;
+            return Sum.ToString();
         }
     }
 }
