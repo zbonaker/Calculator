@@ -11,23 +11,27 @@ namespace Calculator
     {
         public static string baseValue = "0";
         public static string userInput = "0";
+        public static int calcType = 0;
 
         static void Main(string[] args)
         {
             Console.WriteLine("Console Calculator: Your trusted source for second-grade mathematics!\n");
-            Console.WriteLine("Current functionality: \n-Add multiple numbers\n");
+            Console.WriteLine("Current functionality: \n-Addition\n-Subtraction\n");
 
             baseValue = GetFirstNumber();
-
-            //Here I envison a menu to allow the user to select the type of calcuation
-            //e.g., Addition, Subtraction
 
             Calculator doCalc = new Calculator();
 
             while (userInput != "")
                 {
-                    userInput = Calculator.GetInput();
+                calcType = SelectCalculationType();
+                userInput = Calculator.GetInput();
+
+                if (calcType == 1)
                     baseValue = doCalc.Addition(baseValue, userInput);
+
+                else if (calcType == 2)
+                    baseValue = doCalc.Subtraction(baseValue, userInput);
                 }
         }
 
@@ -43,6 +47,27 @@ namespace Calculator
 
             return input;
         }
+
+        private static int SelectCalculationType()
+        {
+            string input;
+
+            Console.WriteLine("\nSelect a calculation to perform or press <enter> to exit:\n");
+            Console.WriteLine("(1) Add\n(2) Subtract\n");
+            input = Console.ReadLine();
+
+            if (input == "")
+                Environment.Exit(0);
+
+            while (!Calculator.Validate(input))
+            {
+                input = Console.ReadLine();
+            }
+
+            int.TryParse(input, out calcType);
+
+            return calcType;
+        }
     }
 
     class Calculator
@@ -57,11 +82,8 @@ namespace Calculator
 
         public static string GetInput()
         {
-            Console.WriteLine("\nInput the next number to add, or press <enter> to exit:");
+            Console.WriteLine("\nInput the next number:");
             string input = Console.ReadLine();
-
-            if (input == "")
-                Environment.Exit(0);
 
             while (!Calculator.Validate(input))
             {
@@ -81,6 +103,21 @@ namespace Calculator
             int.TryParse(userInput, out inputParsed);
 
             Sum = baseValueParsed + inputParsed;
+            Console.WriteLine("\nEquals: {0}", Sum);
+            baseValue = Sum.ToString();
+            return baseValue;
+        }
+
+        public string Subtraction(string baseValue, string userInput)
+        {
+            int Sum;
+            int baseValueParsed;
+            int inputParsed;
+
+            int.TryParse(baseValue, out baseValueParsed);
+            int.TryParse(userInput, out inputParsed);
+
+            Sum = baseValueParsed - inputParsed;
             Console.WriteLine("\nEquals: {0}", Sum);
             baseValue = Sum.ToString();
             return baseValue;
