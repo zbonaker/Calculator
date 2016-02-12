@@ -9,8 +9,8 @@ namespace Calculator
 {
     class Program
     {
-        public static string baseValue = "0";
-        public static string userInput = "0";
+        public static int baseValue = 0;
+        public static int userInput = 0;
         public static int calcType = 0;
 
         static void Main(string[] args)
@@ -22,22 +22,26 @@ namespace Calculator
 
             Calculator doCalc = new Calculator();
 
-            while (userInput != "")
+            while (calcType != null)
                 {
-                calcType = SelectCalculationType();
+                calcType = SelectCalculationType().Value;
                 userInput = Calculator.GetInput();
 
+                int userInputParsed = 0;
+
                 if (calcType == 1)
-                    baseValue = doCalc.Addition(baseValue, userInput);
+                    baseValue = doCalc.Addition(baseValue, userInputParsed);
 
                 else if (calcType == 2)
-                    baseValue = doCalc.Subtraction(baseValue, userInput);
+                    baseValue = doCalc.Subtraction(baseValue, userInputParsed);
                 }
         }
 
-        private static string GetFirstNumber()
+        private static int GetFirstNumber()
         {
             string input;
+            int inputParsed;
+
             Console.WriteLine("Input the first number: ");
             input = Console.ReadLine();
             while (!Calculator.Validate(input))
@@ -45,10 +49,12 @@ namespace Calculator
                 input = Console.ReadLine();
             }
 
-            return input;
+            int.TryParse(input, out inputParsed);
+
+            return inputParsed;
         }
 
-        private static int SelectCalculationType()
+        private static int? SelectCalculationType()
         {
             string input;
 
@@ -57,7 +63,7 @@ namespace Calculator
             input = Console.ReadLine();
 
             if (input == "")
-                Environment.Exit(0);
+                return null;
 
             while (!Calculator.Validate(input))
             {
@@ -80,8 +86,14 @@ namespace Calculator
             return int.TryParse(input, out parsed);
         }
 
-        public static string GetInput()
+        public static int GetInput()
         {
+            //If input is an empty string, return null immediately
+            //else tryparse and return the value
+            //note: above in the while check, need to check for null!
+            //to get the int value, use .value
+            int output;
+
             Console.WriteLine("\nInput the next number:");
             string input = Console.ReadLine();
 
@@ -90,36 +102,27 @@ namespace Calculator
                 input = Console.ReadLine();
             }
 
-            return input;
+                int.TryParse(input, out output);
+                return output;
         }
 
-        public string Addition(string baseValue, string userInput)
+        public int Addition(int baseValue, int userInput)
         {
             int Sum;
-            int baseValueParsed;
-            int inputParsed;
 
-            int.TryParse(baseValue, out baseValueParsed);
-            int.TryParse(userInput, out inputParsed);
-
-            Sum = baseValueParsed + inputParsed;
+            Sum = baseValue + userInput;
             Console.WriteLine("\nEquals: {0}", Sum);
-            baseValue = Sum.ToString();
+            baseValue = Sum;
             return baseValue;
         }
 
-        public string Subtraction(string baseValue, string userInput)
+        public int Subtraction(int baseValue, int userInput)
         {
             int Sum;
-            int baseValueParsed;
-            int inputParsed;
 
-            int.TryParse(baseValue, out baseValueParsed);
-            int.TryParse(userInput, out inputParsed);
-
-            Sum = baseValueParsed - inputParsed;
+            Sum = baseValue - userInput;
             Console.WriteLine("\nEquals: {0}", Sum);
-            baseValue = Sum.ToString();
+            baseValue = Sum;
             return baseValue;
         }
     }
