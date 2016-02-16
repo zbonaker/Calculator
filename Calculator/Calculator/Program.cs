@@ -9,13 +9,12 @@ namespace Calculator
 {
     class Program
     {
-        public static int baseValue = 0;
-        public static int userInput = 0;
+        public static decimal baseValue = 0;
+        public static decimal userInput = 0;
 
         static void Main(string[] args)
         {
             Console.WriteLine("Console Calculator: Your trusted source for second-grade mathematics!\n");
-            Console.WriteLine("Current functionality: \n-Addition\n-Subtraction\n-Multiplication\n");
 
             Calculator doCalc = new Calculator();
 
@@ -36,14 +35,17 @@ namespace Calculator
                 else if (calcType == 3)
                     baseValue = doCalc.Multiplication(baseValue, userInput);
 
+                else if (calcType == 4)
+                    baseValue = doCalc.Division(baseValue, userInput);
+
                 calcType = SelectCalculationType();
                 }
         }
 
-        private static int GetFirstNumber()
+        private static decimal GetFirstNumber()
         {
             string input;
-            int inputParsed;
+            decimal inputParsed;
 
             Console.WriteLine("Input the first number: ");
             input = Console.ReadLine();
@@ -52,7 +54,7 @@ namespace Calculator
                 input = Console.ReadLine();
             }
 
-            int.TryParse(input, out inputParsed);
+            decimal.TryParse(input, out inputParsed);
 
             return inputParsed;
         }
@@ -63,7 +65,7 @@ namespace Calculator
             int i;
 
             Console.WriteLine("\nSelect a calculation to perform or press <enter> to exit:\n");
-            Console.WriteLine("(1) Add\n(2) Subtract\n(3) Multiply\n");
+            Console.WriteLine("(1) Add\n(2) Subtract\n(3) Multiply\n(4) Divide\n");
             input = Console.ReadLine();
 
             if (input == "")
@@ -84,15 +86,15 @@ namespace Calculator
     {
         public static bool Validate(string input)
         {
-            int parsed;
-            if (!int.TryParse(input, out parsed))
-                Console.WriteLine("\nInput is not an integer! Please input the number again: ");
-            return int.TryParse(input, out parsed);
+            decimal parsed;
+            if (!decimal.TryParse(input, out parsed))
+                Console.WriteLine("\nInput is not numeric! Please input the number again: ");
+            return decimal.TryParse(input, out parsed);
         }
 
-        public static int GetInput()
+        public static decimal GetInput()
         {
-            int output;
+            decimal output;
 
             Console.WriteLine("\nInput the next number:");
             string input = Console.ReadLine();
@@ -102,13 +104,13 @@ namespace Calculator
                 input = Console.ReadLine();
             }
 
-                int.TryParse(input, out output);
+                decimal.TryParse(input, out output);
                 return output;
         }
 
-        public int Addition(int baseValue, int userInput)
+        public decimal Addition(decimal baseValue, decimal userInput)
         {
-            int Sum;
+            decimal Sum;
 
             Sum = baseValue + userInput;
             Console.WriteLine("\nEquals: {0}", Sum);
@@ -116,9 +118,9 @@ namespace Calculator
             return baseValue;
         }
 
-        public int Subtraction(int baseValue, int userInput)
+        public decimal Subtraction(decimal baseValue, decimal userInput)
         {
-            int Sum;
+            decimal Sum;
 
             Sum = baseValue - userInput;
             Console.WriteLine("\nEquals: {0}", Sum);
@@ -126,11 +128,21 @@ namespace Calculator
             return baseValue;
         }
 
-        public int Multiplication(int baseValue, int userInput)
+        public decimal Multiplication(decimal baseValue, decimal userInput)
         {
-            int Sum;
+            decimal Sum;
 
             Sum = baseValue * userInput;
+            Console.WriteLine("Equals: {0}", Sum);
+            baseValue = Sum;
+            return baseValue;
+        }
+
+        public decimal Division(decimal baseValue, decimal userInput)
+        {
+            decimal Sum;
+
+            Sum = baseValue / userInput;
             Console.WriteLine("Equals: {0}", Sum);
             baseValue = Sum;
             return baseValue;
