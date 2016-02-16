@@ -14,6 +14,6 @@ Tasks/milestones (may change often):<br>
 2. Calculator allows additional number after returning result (i.e., continue string of calculations) [DONE]<br>
 3. Add subtract method [DONE]<br>
 4. Add mulitply method [DONE]<br>
-5. Add divide method [In Progress]<br>
-6. Add unit test for addition method (need to figure out how to do this...)<br>
+5. Add divide method [DONE]<br>
+6. Add unit test for addition method [In Progress]<br>
 7. Add unit tests for remaining methods<br>
