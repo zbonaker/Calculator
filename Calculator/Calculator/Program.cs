@@ -11,29 +11,29 @@ namespace Calculator
     {
         public static int baseValue = 0;
         public static int userInput = 0;
-        public static int calcType = 0;
 
         static void Main(string[] args)
         {
             Console.WriteLine("Console Calculator: Your trusted source for second-grade mathematics!\n");
             Console.WriteLine("Current functionality: \n-Addition\n-Subtraction\n");
 
+            Calculator doCalc = new Calculator();
+
             baseValue = GetFirstNumber();
 
-            Calculator doCalc = new Calculator();
+            int? calcType = SelectCalculationType();
 
             while (calcType != null)
                 {
-                calcType = SelectCalculationType().Value;
                 userInput = Calculator.GetInput();
 
-                int userInputParsed = 0;
-
                 if (calcType == 1)
-                    baseValue = doCalc.Addition(baseValue, userInputParsed);
+                    baseValue = doCalc.Addition(baseValue, userInput);
 
                 else if (calcType == 2)
-                    baseValue = doCalc.Subtraction(baseValue, userInputParsed);
+                    baseValue = doCalc.Subtraction(baseValue, userInput);
+
+                calcType = SelectCalculationType();
                 }
         }
 
@@ -57,6 +57,7 @@ namespace Calculator
         private static int? SelectCalculationType()
         {
             string input;
+            int i;
 
             Console.WriteLine("\nSelect a calculation to perform or press <enter> to exit:\n");
             Console.WriteLine("(1) Add\n(2) Subtract\n");
@@ -70,9 +71,9 @@ namespace Calculator
                 input = Console.ReadLine();
             }
 
-            int.TryParse(input, out calcType);
+            int.TryParse(input, out i);
 
-            return calcType;
+            return i;
         }
     }
 
@@ -88,10 +89,6 @@ namespace Calculator
 
         public static int GetInput()
         {
-            //If input is an empty string, return null immediately
-            //else tryparse and return the value
-            //note: above in the while check, need to check for null!
-            //to get the int value, use .value
             int output;
 
             Console.WriteLine("\nInput the next number:");
