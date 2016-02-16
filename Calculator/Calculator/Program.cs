@@ -15,7 +15,7 @@ namespace Calculator
         static void Main(string[] args)
         {
             Console.WriteLine("Console Calculator: Your trusted source for second-grade mathematics!\n");
-            Console.WriteLine("Current functionality: \n-Addition\n-Subtraction\n");
+            Console.WriteLine("Current functionality: \n-Addition\n-Subtraction\n-Multiplication\n");
 
             Calculator doCalc = new Calculator();
 
@@ -32,6 +32,9 @@ namespace Calculator
 
                 else if (calcType == 2)
                     baseValue = doCalc.Subtraction(baseValue, userInput);
+
+                else if (calcType == 3)
+                    baseValue = doCalc.Multiplication(baseValue, userInput);
 
                 calcType = SelectCalculationType();
                 }
@@ -60,7 +63,7 @@ namespace Calculator
             int i;
 
             Console.WriteLine("\nSelect a calculation to perform or press <enter> to exit:\n");
-            Console.WriteLine("(1) Add\n(2) Subtract\n");
+            Console.WriteLine("(1) Add\n(2) Subtract\n(3) Multiply\n");
             input = Console.ReadLine();
 
             if (input == "")
@@ -119,6 +122,16 @@ namespace Calculator
 
             Sum = baseValue - userInput;
             Console.WriteLine("\nEquals: {0}", Sum);
+            baseValue = Sum;
+            return baseValue;
+        }
+
+        public int Multiplication(int baseValue, int userInput)
+        {
+            int Sum;
+
+            Sum = baseValue * userInput;
+            Console.WriteLine("Equals: {0}", Sum);
             baseValue = Sum;
             return baseValue;
         }
